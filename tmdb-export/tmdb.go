@@ -67,6 +67,7 @@ func (t TMDB) GetMovie(id int64) (Movie, error) {
 		TMDBID:       fmt.Sprintf("%d", result.ID),
 		IMDBID:       result.IMDbID,
 		Year:         year,
+		RunTime:      result.Runtime,
 		Directors:    directors,
 		Summary:      result.Overview,
 	}, nil

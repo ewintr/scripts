@@ -46,6 +46,7 @@ type Movie struct {
 	Title        string
 	EnglishTitle string
 	Year         int
+	RunTime      int
 	Directors    []string
 	Summary      string
 }

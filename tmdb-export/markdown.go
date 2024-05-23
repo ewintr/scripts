@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 	"text/template"
+	"time"
 )
 
 const (
@@ -14,6 +15,7 @@ emdb: {{ .IMDBID }}
 englishTitle: {{ .EnglishTitle }}
 title: {{ .Title }}
 year: {{ .Year }}
+runtime: {{ .Runtime }}
 directors: {{ .DirectorsYAML }}
 inCollection: no
 watchedOn:
@@ -43,12 +45,20 @@ func Export(movie Movie) error {
 		return err
 	}
 
+	runtime := time.Duration(movie.RunTime) * time.Minute
+	runtimeStr, _, ok := strings.Cut(runtime.String(), "m")
+	if !ok {
+		return fmt.Errorf("could not parse runtime format %s", runtime)
+	}
+	runtimeStr = fmt.Sprintf("%sm", runtimeStr)
+
 	data := struct {
 		TMDBID        string
 		IMDBID        string
 		EnglishTitle  string
 		Title         string
 		Year          int
+		Runtime       string
 		DirectorsYAML string
 		Directors     string
 		Summary       string
@@ -58,6 +68,7 @@ func Export(movie Movie) error {
 		EnglishTitle:  movie.EnglishTitle,
 		Title:         movie.Title,
 		Year:          movie.Year,
+		Runtime:       runtimeStr,
 		DirectorsYAML: strings.Join(movie.Directors, ", "),
 		Directors:     fmt.Sprintf("[[%s]]", strings.Join(movie.Directors, "]], [[")),
 		Summary:       movie.Summary,
