@@ -26,6 +26,10 @@ rating:
 
 Director(s): {{ .Directors }}
 
+[TheMovieDB](https://www.themoviedb.org/movie/{{ .TMDBID }}), [IMDB](https://www.imdb.com/title/{{ .IMDBID }}/)
+
+IMDB:
+
 {{ .Summary }}
 
 ## Comment
