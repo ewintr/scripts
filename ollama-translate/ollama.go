@@ -30,7 +30,6 @@ func (o *Ollama) Generate(model, prompt string) (string, error) {
 	}{
 		Model:  model,
 		Prompt: prompt,
-		Format: "json",
 		Stream: false,
 	}
 	reqBodyJSON, err := json.Marshal(reqBody)
